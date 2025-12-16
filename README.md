@@ -9,14 +9,8 @@ This is my final project for CISC5800 - Machine Learning - Fall 2025 at Fordham 
 3. mk_dir_small.sh - This script creates a new directory structure for the "small" dataset. This dataset has the same structure as the original, but only has 20 classes and about 56,000 samples.
 
 ### keras_models
-This fodler contains .keras files for the saved models of my best models.
 1. cnn_small_final.keras is from the "small" dataset.
 2. model{0-3}.keras are saved models from the SKF model.
-
-### Software Configs
-This folder contains the config files I used to set up my GPU to run machine learning models.
-1. The tensorflow python wheel was used to set up tensorflow-nightly (I needed this for my specific GPU model).
-2. The Cuda and cudnn files were used to set up Nvidia CUDA Toolkit.
 
 ### Individual Files
 1. ML_Final_Cruise.ipynb is my main Jupyter Notebook with most of the code for my project.
