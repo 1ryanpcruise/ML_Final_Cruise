@@ -1,1 +1,78 @@
+mk_dir_health.sh
 
+#!/bin/bash
+mkdir -p /home/ryan/plants
+
+declare -a dir_list=('Rice___unhealthy' 'Blueberry___healthy' 'Watermelon___healthy' 'Tomato___unhealthy' 'Rose___unhealthy' 'Raspberry___healthy' 'Sugercane___unhealthy' 'Sugercane___healthy' 'Cassava___healthy' 'Cherry___healthy' 'Corn___unhealthy' 'Potato___unhealthy' 'Corn___healthy' 'Apple___healthy' 'Grape___healthy' 'Coffee___unhealthy' 'Bell_pepper___healthy' 'Peach___unhealthy' 'Cassava___unhealthy' 'Apple___unhealthy' 'Bell_pepper___unhealthy' 'Cherry___unhealthy' 'Peach___healthy' 'Tomato___healthy' 'Potato___healthy' 'Watermelon___unhealthy' 'Coffee___healthy' 'Grape___unhealthy' 'Soybean___healthy' 'Orange___unhealthy' 'Squash___unhealthy' 'Strawberry___unhealthy' 'Rose___healthy' 'Strawberry___healthy')
+
+for ITEM in "${dir_list[@]}"; do
+   mkdir -p /home/ryan/plants/$ITEM
+done
+
+
+#stores black_rot to part
+# part=$(echo "Apple___black_rot" | awk -F'___' '{print $NF}')
+# echo "This directory: $(basename $dir)"
+
+for dir in /home/ryan/plant_data/plant-diseases-training-dataset/*; do
+   dir_healthy="$(echo $dir | awk -F'___' '{print $NF}')"
+   dir_str="$(basename $dir)"
+   delim="___"
+   plant=${dir_str%%$delim*}
+
+   if [[ "$dir_healthy" == "healthy" ]]; then
+      find $dir -type f -exec cp -t /home/ryan/plants/$dir_str {} +
+   else 
+      unhealthy_str="___unhealthy"
+      find $dir -type f -exec cp -t /home/ryan/plants/$plant$unhealthy_str {} +
+      
+   fi
+done
+
+
+
+mk_dir_skf.sh
+
+#!/bin/bash
+
+mkdir -p /home/ryan/plants_skf
+
+declare -a dir_list=('Rice___unhealthy' 'Blueberry___healthy' 'Watermelon___healthy' 'Tomato___unhealthy' 'Rose___unhealthy' 'Raspberry___healthy' 'Sugercane___unhealthy' 'Sugercane___healthy' 'Cassava___healthy' 'Cherry___healthy' 'Corn___unhealthy' 'Potato___unhealthy' 'Corn___healthy' 'Apple___healthy' 'Grape___healthy' 'Coffee___unhealthy' 'Bell_pepper___healthy' 'Peach___unhealthy' 'Cassava___unhealthy' 'Apple___unhealthy' 'Bell_pepper___unhealthy' 'Cherry___unhealthy' 'Peach___healthy' 'Tomato___healthy' 'Potato___healthy' 'Watermelon___unhealthy' 'Coffee___healthy' 'Grape___unhealthy' 'Soybean___healthy' 'Orange___unhealthy' 'Squash___unhealthy' 'Strawberry___unhealthy' 'Rose___healthy' 'Strawberry___healthy')
+
+
+for dir in /home/ryan/plant_data/plant-diseases-training-dataset/*; do
+   dir_str="$(basename $dir)"
+   for file in $dir/*; do
+      file_str="$(basename $file)"
+      cp $file /home/ryan/plants_skf
+      mv /home/ryan/plants_skf/$file_str /home/ryan/plants_skf/${dir_str}-$file_str
+   done
+done
+
+
+
+mk_dir_small.sh
+
+#!/bin/bash
+
+#parent directory
+mkdir -p /home/ryan/plants_small
+
+#list of small subset of plants
+declare -a dir_list=('Rice___brown_spot' 'Tomato___bacterial_spot' 'Cassava___healthy' 'Rice___tungro' 'Tomato___spider_mites' 'Rice___bacterial_blight' 'Potato___early_blight' 'Cassava___green_mottle' 'Tomato___early_blight' 'Tomato___healthy' 'Potato___healthy' 'Rice___blast' 'Tomato___septoria_leaf_spot' 'Tomato___target_spot' 'Cassava___mosaic_disease' 'Potato___late_blight' 'Soybean___healthy' 'Cassava___bacterial_blight' 'Tomato___late_blight' 'Tomato___leaf_curl' 'Cassava___brown_streak_disease')
+
+#creates all subdirectories
+for ITEM in "${dir_list[@]}"; do
+   mkdir -p /home/ryan/plants_small/$ITEM
+done
+
+
+for dir in /home/ryan/plant_data/plant-diseases-training-dataset/*; do
+   dir_str="$(basename $dir)"
+
+   for class in "${dir_list[@]}"; do
+      if [[ "$dir_str" == "$class"  ]]; then
+         find $dir -type f -exec cp -t /home/ryan/plants_small/$dir_str {} +
+      fi
+   done
+don
