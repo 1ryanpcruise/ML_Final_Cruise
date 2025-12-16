@@ -10,7 +10,7 @@ This is my final project for CISC5800 - Machine Learning - Fall 2025 at Fordham 
 
 ### keras_models
 1. cnn_small_final.keras is from the "small" dataset.
-2. model{0-3}.keras are saved models from the SKF model.
+2. model{0-4}.keras are saved models from the SKF model.
 
 ### Individual Files
 1. ML_Final_Cruise.ipynb is my main Jupyter Notebook with most of the code for my project.
